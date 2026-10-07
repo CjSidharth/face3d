@@ -1,0 +1,34 @@
+# face3d — photo -> printable STL bust
+# Target: Python 3.11, macOS Apple Silicon (MPS). No CUDA, no PyTorch3D, no torchmcubes.
+
+# --- Core ML ---------------------------------------------------------------
+torch>=2.2            # ships with MPS backend on macOS; no separate CUDA build needed
+torchvision>=0.17
+transformers>=4.35,<5   # vendored tsr package only needs the stable ViTModel API
+einops>=0.7.0
+omegaconf==2.3.0
+huggingface-hub>=0.20
+scikit-image>=0.22     # marching cubes replacement for torchmcubes (see pipeline/reconstruct/vendor/tsr)
+imageio>=2.31          # transitive import in vendored tsr/utils.py (no ffmpeg extra needed)
+
+# --- Preprocessing -----------------------------------------------------
+mediapipe>=0.10        # face detection (CPU)
+rembg>=2.0.55           # background removal (ONNX runtime, CPU)
+onnxruntime>=1.16
+opencv-python-headless>=4.9
+Pillow>=10.1
+
+# --- Mesh / printability ----------------------------------------------
+trimesh[easy]>=4.0.5
+manifold3d>=2.5          # boolean union engine for fusing the pedestal onto the bust (used directly, not just via trimesh[easy])
+pymeshlab>=2023.12
+numpy<2.0               # pinned for pymeshlab/trimesh/mediapipe compatibility
+
+# --- API -----------------------------------------------------------------
+fastapi>=0.110
+uvicorn[standard]>=0.27
+python-multipart>=0.0.9
+
+# --- Dev / tests -----------------------------------------------------------
+pytest>=8.0
+httpx>=0.27             # FastAPI TestClient dependency

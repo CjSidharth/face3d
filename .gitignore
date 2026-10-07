@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Model weights & generated output
+models/*
+!models/.gitkeep
+outputs/*
+!outputs/.gitkeep
+
+# HF / torch caches if redirected locally
+.cache/
+
+# OS
+.DS_Store
+
+# Env
+.env
+
+# Personal test inputs
+sid.jpeg
+bust.stl
+.pytest_cache/
+.claude/
